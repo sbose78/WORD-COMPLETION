@@ -1,0 +1,163 @@
+<style media="screen" type="text/css">
+
+div.options{
+	background-color: #FFF;
+	padding: 2px 6px;
+	border: 1px solid #070;
+	
+}
+
+
+div.options:hover {
+	background-color: #69F;
+}
+
+</style>
+
+<script src="dictionary.js" type="text/javascript">	</script>
+
+
+<script  type="text/javascript">
+
+function modify()
+{
+
+	
+	//count_words();
+	var a= document.getElementById('n');
+	var s=a.value;	
+	//alert(s);
+	document.getElementById("spaces").innerHTML=s.split(" ");
+	var words=s.split(" ");
+	var last=words[words.length -1];
+	
+	//alert(words.length);
+	if(s.charAt([s.length -1])==' ' )
+	{//	alert("space");
+			document.getElementById('t').value=s;
+
+		return;
+	}
+
+	 	 /*  suggest words   */
+		 
+    suggest_words(last);					
+	/*
+	var reversed_array=last.split("").reverse();
+	var reversed_string=reversed_array.join("");
+	words[words.length -1]=reversed_string;
+	
+	s="";
+	
+	document.getElementById("ji").innerHTML = "";
+
+	for(i=0;i<words.length;i++)
+	{
+		s+=words[i];
+		if(i!=words.length-1) s+=" ";
+		var tempDiv = document.createElement("div");
+		tempDiv.innerHTML = words[i];
+		tempDiv.className = "options";
+		tempDiv.onclick = makeChoice;
+
+		document.getElementById('ji').appendChild(tempDiv);		
+	}	
+	document.getElementById('t').value=s;	*/
+	
+}
+
+function suggest_words(word)
+{
+	if(word.length < 4)
+	{ 	document.getElementById("ji").innerHTML = "";
+
+		return;
+	}
+	var words=getSuggestions(word);
+	//alert(word.length);
+	
+	//var words=["hi","holo","hyy"];
+	
+	document.getElementById("ji").innerHTML = "";
+	for(i=0;i<words.length;i++)
+	{
+		
+		var tempDiv = document.createElement("div");
+		tempDiv.innerHTML = words[i];
+		tempDiv.className = "options";
+		tempDiv.onclick = makeChoice;
+
+		document.getElementById('ji').appendChild(tempDiv);		
+	}	
+	
+
+}
+function makeChoice(evt)
+{
+	var thisDiv = (evt) ? evt.target : window.event.srcElement;
+	
+	var a= document.getElementById('n');
+	var s=a.value;	
+	
+	document.getElementById("spaces").innerHTML=s.split(" ");
+	var words=s.split(" ");
+	var last=words[words.length -1];
+	
+	
+	if(s.charAt([s.length -1])==' ' )
+	{//	alert("space");
+		document.getElementById("ji").innerHTML = "";
+		return;
+	}
+	
+	words[words.length -1]=thisDiv.innerHTML;
+	
+	s="";
+	
+	document.getElementById("ji").innerHTML = "";
+
+	for(i=0;i<words.length;i++)
+	{
+		s+=words[i];
+		if(i!=words.length-1) s+=" ";
+	}
+	
+	document.getElementById('n').value=s;	
+
+	
+	
+	//document.getElementById('n').focus();
+	
+
+}
+function focus(obj)
+{
+		obj.focus();
+
+}
+
+
+</script>
+<h3 align='center'> WORD SUGGEST  </h3>
+
+<h5 align='center'>  Type (atleast) the first 4 letters of any dictionary word, and you get the rest of it suggested :)
+<br> Copy-paste the stuff to your document after you are done typing !
+
+ <h5>
+
+
+<div align="center">
+TYPE HERE: <br>
+<textarea  id="n" rows='5' cols='90' type='text' value='' onmouseover="focus(this)" onkeyup='return modify()'>
+</textarea>
+
+</div>
+<div  id="ji" width='10'></div>
+
+<br><br>
+
+
+<br><br>
+
+
+<div style="visibility:hidden" id="spaces" width='10'></div>
